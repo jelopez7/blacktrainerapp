@@ -1,18 +1,30 @@
 import { Button, Icon, Image, Input, Text } from "@rneui/base";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ScrollView, View } from "react-native";
 import { styles } from "./LoginScreen.styles";
-import { useSelector } from "react-redux";
+import { useFormik } from "formik";
+import { initialValues, validationSchema } from "./LoginScreenData";
+import { loginUser } from "../../../actions/auth";
+import { useDispatch } from "react-redux";
 
 export default function LoginScreen() {
   const [showPassword, setShowPassword] = useState(false);
   const onShowHidePassword = () => setShowPassword((prevSate) => !prevSate);
 
-  const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log(auth);
-  }, []);
+  const formik = useFormik({
+    initialValues: initialValues(),
+    validationSchema: validationSchema(),
+    validateOnChange: false,
+    onSubmit: async (formValue) => {
+      try {
+        dispatch(loginUser(formValue));
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
 
   return (
     <ScrollView>
@@ -33,6 +45,8 @@ export default function LoginScreen() {
                 iconStyle={styles.icon}
               />
             }
+            onChangeText={(text) => formik.setFieldValue("identifier", text)}
+            errorMessage={formik.errors.identifier}
           />
 
           <Input
@@ -47,12 +61,15 @@ export default function LoginScreen() {
                 onPress={onShowHidePassword}
               />
             }
+            onChangeText={(text) => formik.setFieldValue("password", text)}
+            errorMessage={formik.errors.password}
           />
 
           <Button
             title="Iniciar sesión"
             containerStyle={styles.btnContainer}
             buttonStyle={styles.btn}
+            onPress={formik.handleSubmit}
           />
         </View>
       </View>

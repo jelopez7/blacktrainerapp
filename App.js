@@ -1,15 +1,18 @@
 import { NavigationContainer } from "@react-navigation/native";
-import AppNavigation from "./navigation/AppNavigation";
 import { Provider } from "react-redux";
 import store from "./store/store";
+import HandlerNavigation from "./navigation/HandlerNavigation";
+import { NativeBaseProvider } from "native-base";
 
 export default function App() {
   return (
     <>
       <Provider store={store}>
-        <NavigationContainer>
-          <AppNavigation />
-        </NavigationContainer>
+        <NativeBaseProvider>
+          <NavigationContainer>
+            <HandlerNavigation />
+          </NavigationContainer>
+        </NativeBaseProvider>
       </Provider>
     </>
   );

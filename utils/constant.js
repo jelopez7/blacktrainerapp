@@ -1,2 +1,3 @@
 export const TOKEN = "token";
-export const BASE_PATH = "https://anime-back-production.up.railway.app";
+export const BASE_PATH =
+  "https://blacktrainerbackend-production.up.railway.app";
