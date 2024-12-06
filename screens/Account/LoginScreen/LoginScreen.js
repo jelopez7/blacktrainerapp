@@ -1,11 +1,18 @@
 import { Button, Icon, Image, Input, Text } from "@rneui/base";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { styles } from "./LoginScreen.styles";
+import { useSelector } from "react-redux";
 
 export default function LoginScreen() {
   const [showPassword, setShowPassword] = useState(false);
   const onShowHidePassword = () => setShowPassword((prevSate) => !prevSate);
+
+  const auth = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    console.log(auth);
+  }, []);
 
   return (
     <ScrollView>
