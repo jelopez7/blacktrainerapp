@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import store from "./store/store";
 import HandlerNavigation from "./navigation/HandlerNavigation";
 import { NativeBaseProvider } from "native-base";
+import Toast from "react-native-toast-message";
 
 export default function App() {
   return (
@@ -12,6 +13,8 @@ export default function App() {
           <NavigationContainer>
             <HandlerNavigation />
           </NavigationContainer>
+
+          <Toast />
         </NativeBaseProvider>
       </Provider>
     </>

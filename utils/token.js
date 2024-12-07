@@ -9,9 +9,10 @@ export const setToken = async (token) => {
   }
 };
 
-export const getToken = async (token) => {
+export const getToken = async () => {
   try {
-    await AsyncStorage.getItem(TOKEN);
+    const token = await AsyncStorage.getItem(TOKEN);
+    return token;
   } catch (error) {
     console.log(error);
   }

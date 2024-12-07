@@ -5,11 +5,13 @@ import { styles } from "./LoginScreen.styles";
 import { useFormik } from "formik";
 import { initialValues, validationSchema } from "./LoginScreenData";
 import { loginUser } from "../../../actions/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function LoginScreen() {
   const [showPassword, setShowPassword] = useState(false);
   const onShowHidePassword = () => setShowPassword((prevSate) => !prevSate);
+
+  const { loading, error } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
@@ -18,11 +20,7 @@ export default function LoginScreen() {
     validationSchema: validationSchema(),
     validateOnChange: false,
     onSubmit: async (formValue) => {
-      try {
-        dispatch(loginUser(formValue));
-      } catch (error) {
-        console.log(error);
-      }
+      dispatch(loginUser(formValue));
     },
   });
 
@@ -65,11 +63,14 @@ export default function LoginScreen() {
             errorMessage={formik.errors.password}
           />
 
+          {error && <Text>{error}</Text>}
+
           <Button
             title="Iniciar sesión"
             containerStyle={styles.btnContainer}
             buttonStyle={styles.btn}
             onPress={formik.handleSubmit}
+            loading={loading}
           />
         </View>
       </View>

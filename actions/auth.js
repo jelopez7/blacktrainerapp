@@ -2,8 +2,10 @@ import {
   loginFailure,
   loginStart,
   loginSuccess,
+  logout,
 } from "../reducers/authReducer";
-import { httpSinToken } from "../helpers/http";
+import { httpConToken, httpSinToken } from "../helpers/http";
+import { getToken, setToken } from "../utils/token";
 
 export const loginUser = (formData) => async (dispatch) => {
   dispatch(loginStart());
@@ -12,6 +14,7 @@ export const loginUser = (formData) => async (dispatch) => {
     const { data } = await httpSinToken.post("/api/auth/local", formData);
     const { user, jwt: token } = data;
 
+    await setToken(token);
     dispatch(loginSuccess({ user, token }));
   } catch (error) {
     dispatch(
@@ -19,5 +22,22 @@ export const loginUser = (formData) => async (dispatch) => {
         error.response?.data?.error?.message || "Error de inicio de sesión"
       )
     );
+  }
+};
+
+export const checkingUser = () => async (dispatch) => {
+  dispatch(loginStart());
+  try {
+    const { data: user } = await httpConToken.get("/api/users/me");
+    if (user) {
+      const token = await getToken();
+
+      dispatch(loginSuccess({ user, token }));
+    } else {
+      dispatch(logout());
+    }
+  } catch (error) {
+    console.log(error.response?.data?.error?.message);
+    dispatch(logout());
   }
 };
