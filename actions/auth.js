@@ -6,6 +6,8 @@ import {
 } from "../reducers/authReducer";
 import { httpConToken, httpSinToken } from "../helpers/http";
 import { getToken, setToken } from "../utils/token";
+import { TOKEN } from "../utils";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const loginUser = (formData) => async (dispatch) => {
   dispatch(loginStart());
@@ -23,6 +25,11 @@ export const loginUser = (formData) => async (dispatch) => {
       )
     );
   }
+};
+
+export const logoutUser = () => async (dispatch) => {
+  await AsyncStorage.removeItem(TOKEN);
+  dispatch(logout());
 };
 
 export const checkingUser = () => async (dispatch) => {
