@@ -1,8 +1,12 @@
 import { Icon, Image, Rating, Text } from "@rneui/base";
 import React from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import {
+  Linking,
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { View } from "react-native";
-import LoginScreen from "./LoginScreen";
 import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../utils";
 
@@ -11,6 +15,27 @@ export default function AccountScreen() {
 
   const goToLogin = () => {
     navitation.navigate(screen.account.login);
+  };
+
+  const openWhatsApp = (phoneNumber, message = "") => {
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+      message
+    )}`;
+    Linking.canOpenURL(url)
+      .then((supported) => {
+        if (!supported) {
+          console.log("WhatsApp no está instalado en este dispositivo");
+        } else {
+          return Linking.openURL(url);
+        }
+      })
+      .catch((err) => console.error("Error al abrir WhatsApp:", err));
+  };
+
+  const handleOpenWhatsApp = () => {
+    const phoneNumber = "+573152335896"; // Número en formato internacional
+    const message = "Hola, ¿cómo estás?"; // Mensaje opcional
+    openWhatsApp(phoneNumber, message);
   };
 
   return (
@@ -23,9 +48,20 @@ export default function AccountScreen() {
         <Text style={styles.description}>
           Si tienes una cuenta con nosotros, puedes Aceptar y continuar. En caso
           de que requiera nuestros servicios de rutinas personalizadas, puedes
-          contactarte con nosotros al número 3152335896, para brindarte toda la
-          información y poder entregarte una rutina que se adapte a tus
-          expectativas
+          contactarte con nosotros al número{" "}
+          <TouchableOpacity onPress={handleOpenWhatsApp}>
+            <Text style={styles.wpp}>
+              3152335896{" "}
+              <Icon
+                type="material-community"
+                size={15}
+                name="whatsapp"
+                color="#00d757"
+              />
+            </Text>
+          </TouchableOpacity>
+          , para brindarte toda la información y poder entregarte una rutina que
+          se adapte a tus expectativas
         </Text>
 
         <Text style={styles.btn} onPress={goToLogin}>
@@ -65,5 +101,9 @@ const styles = StyleSheet.create({
     fontSize: 22,
     textAlign: "center",
     marginTop: 30,
+  },
+  wpp: {
+    color: "#00d757",
+    fontWeight: "bold",
   },
 });
