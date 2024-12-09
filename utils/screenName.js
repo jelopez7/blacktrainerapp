@@ -1,6 +1,7 @@
 const excerciseStack = {
   tab: "ExcercisesTab",
   Excercises: "Excercises",
+  Routine: "Routine",
   Excercise: "Excercise",
 };
 
