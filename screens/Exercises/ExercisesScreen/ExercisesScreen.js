@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { getRoutinesByUser } from "../../../api/routines";
 import { useSelector } from "react-redux";
 import { groupBy, map } from "lodash";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { styles } from "./ExercisesScreen.styles";
 import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
@@ -34,7 +34,7 @@ export function ExercisesScreen() {
   let counter = 1;
 
   return (
-    <View style={styles.content}>
+    <ScrollView style={styles.content}>
       {map(routines, (routine, index) => (
         <ListItem
           containerStyle={styles.listContent}
@@ -49,6 +49,6 @@ export function ExercisesScreen() {
           <Icon type="material-community" name="chevron-right" />
         </ListItem>
       ))}
-    </View>
+    </ScrollView>
   );
 }
