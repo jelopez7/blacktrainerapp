@@ -36,6 +36,7 @@ export const checkingUser = () => async (dispatch) => {
   dispatch(loginStart());
   try {
     const { data: user } = await httpConToken.get("/api/users/me");
+
     if (user) {
       const token = await getToken();
 

@@ -2,31 +2,47 @@ import { Image, Text, Icon } from "@rneui/base";
 import React from "react";
 import { FlatList, ScrollView, TouchableOpacity, View } from "react-native";
 import { styles } from "./RoutineScreen.styles";
+import { useNavigation } from "@react-navigation/native";
+import { screen } from "../../../utils";
 
 export function RoutineScreen({ route }) {
+  const navigation = useNavigation();
+
+  const goToRoutine = (exercise, index, routine) => {
+    navigation.navigate(screen.excercise.tab, {
+      screen: screen.excercise.Excercise,
+      params: {
+        exercise,
+        index,
+        routine,
+      },
+    });
+  };
+
   return (
     <View style={styles.content}>
       <FlatList
         data={route.params.routine}
-        renderItem={(doc) => {
-          const routine = doc.item.attributes;
+        renderItem={({ item, index }) => {
+          const exercise = item.attributes;
 
           return (
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => goToRoutine(exercise, index, route.params.routine)}
+            >
               <View style={styles.contentFlat}>
                 <View style={styles.contentInfo}>
                   <Image
                     source={{
-                      uri: routine.exercise.data.attributes.image.data[0]
+                      uri: exercise.exercise.data.attributes.image.data[0]
                         .attributes.url,
                     }}
                     style={styles.image}
                   />
                   <View>
                     <Text style={styles.name}>
-                      {routine.exercise.data.attributes.name}
+                      {exercise.exercise.data.attributes.name}
                     </Text>
-                    <Text style={styles.info}>{routine.description}</Text>
                   </View>
                 </View>
                 <Icon type="material-community" name="chevron-right" />

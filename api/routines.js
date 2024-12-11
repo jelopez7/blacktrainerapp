@@ -3,7 +3,7 @@ import { httpConToken } from "../helpers/http";
 export async function getRoutinesByUser(idUser) {
   try {
     const { data } = await httpConToken.get(
-      `/api/routines?filters[$and][0][user][id][$eq]=${idUser}&populate[exercise][populate][image]=*`
+      `/api/routines?filters[$and][0][user][id][$eq]=${idUser}&populate[exercise][populate][image]=*&populate[type]=*`
     );
     return data.data;
   } catch (error) {
