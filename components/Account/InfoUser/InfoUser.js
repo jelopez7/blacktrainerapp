@@ -3,12 +3,24 @@ import React from "react";
 import { View } from "react-native";
 import { useSelector } from "react-redux";
 import { styles } from "./InfoUser.styles";
+import * as ImagePicker from "expo-image-picker";
 
 export function InfoUser() {
   const { user } = useSelector((state) => state.auth);
 
   const changeAvatar = async () => {
-    console.log("Prueba");
+    const result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+    });
+
+    if (!result.canceled) uploadImage(result.assets[0].uri);
+  };
+
+  const uploadImage = async (uri) => {
+    const response = await fetch(uri);
+
+    console.log(response);
   };
 
   return (
