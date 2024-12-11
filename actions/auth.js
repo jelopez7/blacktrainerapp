@@ -35,7 +35,7 @@ export const logoutUser = () => async (dispatch) => {
 export const checkingUser = () => async (dispatch) => {
   dispatch(loginStart());
   try {
-    const { data: user } = await httpConToken.get("/api/users/me");
+    const { data: user } = await httpConToken.get("/api/users/me?populate=*");
 
     if (user) {
       const token = await getToken();
