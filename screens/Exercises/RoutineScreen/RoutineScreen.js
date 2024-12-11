@@ -1,9 +1,10 @@
-import { Image, Text, Icon } from "@rneui/base";
+import { Text, Icon } from "@rneui/base";
 import React from "react";
-import { FlatList, ScrollView, TouchableOpacity, View } from "react-native";
+import { FlatList, TouchableOpacity, View } from "react-native";
 import { styles } from "./RoutineScreen.styles";
 import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
+import { Image } from "expo-image";
 
 export function RoutineScreen({ route }) {
   const navigation = useNavigation();
@@ -33,10 +34,10 @@ export function RoutineScreen({ route }) {
               <View style={styles.contentFlat}>
                 <View style={styles.contentInfo}>
                   <Image
-                    source={{
-                      uri: exercise.exercise.data.attributes.image.data[0]
-                        .attributes.url,
-                    }}
+                    source={
+                      exercise.exercise.data.attributes.image.data[0].attributes
+                        .url
+                    }
                     style={styles.image}
                   />
                   <View>

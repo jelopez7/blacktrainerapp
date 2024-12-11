@@ -1,8 +1,9 @@
-import { Image, Text } from "@rneui/base";
+import { Text } from "@rneui/base";
 import React from "react";
 import { Dimensions, ScrollView, View } from "react-native";
 import { styles } from "./ExerciseScreen.styles";
 import { Header, PaginationExercises } from "../../../components/Shared";
+import { Image } from "expo-image";
 
 export function ExerciseScreen({ route }) {
   const image =
@@ -16,8 +17,9 @@ export function ExerciseScreen({ route }) {
   return (
     <View style={styles.content}>
       <Image
-        source={{ uri: image }}
-        style={{ height: 250, width: width, resizeMode: "contain" }}
+        source={image}
+        style={{ height: 250, width: width }}
+        contentFit="contain"
       />
       <ScrollView style={styles.contentScroll}>
         <Header exercise={route.params.exercise} />
