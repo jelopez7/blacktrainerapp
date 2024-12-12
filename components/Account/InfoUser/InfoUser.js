@@ -8,6 +8,8 @@ import * as ImagePicker from "expo-image-picker";
 export function InfoUser() {
   const { user } = useSelector((state) => state.auth);
 
+  const avatarUrl = user.avatar?.url ? user.avatar.url : user.avatar;
+
   const changeAvatar = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
@@ -29,8 +31,8 @@ export function InfoUser() {
         size="large"
         rounded
         containerStyle={styles.avatar}
-        source={user?.avatar?.url ? { uri: user.avatar.url } : null}
-        icon={user?.avatar?.url ? null : { type: "material", name: "person" }}
+        source={avatarUrl ? { uri: avatarUrl } : null}
+        icon={avatarUrl ? null : { type: "material", name: "person" }}
       >
         <Avatar.Accessory size={24} onPress={changeAvatar} />
       </Avatar>

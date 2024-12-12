@@ -4,7 +4,7 @@ import { View } from "react-native";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../../actions/auth";
 import { styles } from "./UserLoggedScreen.styles";
-import { InfoUser } from "../../../components/Account";
+import { HeaderUser, InfoUser } from "../../../components/Account";
 
 export function UserLoggedScreen() {
   const dispatch = useDispatch();
@@ -15,6 +15,8 @@ export function UserLoggedScreen() {
   return (
     <View>
       <InfoUser />
+
+      <HeaderUser />
 
       <Button
         title="Cerrar sesión"
